@@ -32,8 +32,9 @@ IntelliJ Ultimate edition https://www.jetbrains.com/idea/download/?section=mac
 Docker Desktop
 
 ===============================
-Part 1:
 
+Part 1:
+```
 Java 9 (September 2017):
 1)	Modules
 2)	JShell
@@ -81,5 +82,7 @@ Java 19:
 Java 21 (September 2023):
 1) Improvements for Pattern matching on sealed classes, 
 2) virtual threads [stable]
+
+```
 
 =====================
