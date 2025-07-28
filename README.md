@@ -272,3 +272,33 @@ p.title(); p.price();
 Not understood by frameworks like Hibernate / Spring --> they use getXXX() and setXXX(); --> can use lombok
 
 ``
+
+java 14 and 15: Hidden classes
+--enable-preview in java 14
+
+* Runtime classes: not present in source or .class file
+* not discoverable: not accessible via reflection or classpath
+- Can't use Class.forName() of classloader
+* Main purpose is meant to be used by frameworks / tool
+* Garbage Collector: Automatically cleaned up when no longer referenced
+
+Byte Buddy/ JavaAssit is a code generation and manipulation library for creating and modifying Java classes during the runtime of a Java application
+
+Hidden class:
+Runtime
+Not visible via reflection
+not reusable, one time per lookup
+meant for framework sort of code
+
+Anonymous class:
+Compile time
+fully visible
+resuable
+enclosing class logic; new Comparator<Product> {
+    // int compare(...) {}
+}
+
+Real World use cases:
+1) Dynamic proxies for lazy loading
+2) Telemetry like scenarios like profile, count, gauge
+3) bytecode instrumentaion for optimzation
