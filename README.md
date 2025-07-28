@@ -86,3 +86,88 @@ Java 21 (September 2023):
 ```
 
 =====================
+
+Part 1: Migrating Java from version 8 to 21 [9, 11, ..21]
+Part 2: Spring Boot and building RESTful WS with JPA [RDBMS]
+
+Day 1:
+
+JPMS: Modules -- Project JigSaw
+
+Modularity:
+java 8 rt.jar -- runtime jar file part of jdk and it's not modularized
+
+we might not need even 20% of apis provided by rt.jar
+all public members are accessable  from classes added to classpath;
+
+```
+    A single jar [api.jar] contains 2 packages
+
+    package com.adobe.module.repo;
+    public class UserRepo {
+        ///
+    }
+
+    package com.adobe.module.service;
+    import com.adobe.module.repo.UserRepo;
+
+    public class AppService {
+        UserRepo userRepo;
+        ...
+    }
+```
+
+Client applications developed using android/ desktop / tv /web will add [api.jar]
+
+```
+    client code can access service package as well as repo package
+    no way we can prevent repo access in client
+```
+
+Module System: OSGi https://en.wikipedia.org/wiki/OSGi
+MANIFEST.MF
+```
+Bundle-Name:API
+ Bundle-SymbolicName: org.wikipedia.helloworld
+ Bundle-Description: A Hello World bundle
+ Bundle-ManifestVersion: 2
+ Bundle-Version: 1.0.0
+ Bundle-Activator: org.wikipedia.Activator
+ Export-Package: com.adobe.module.service, com.adobe.module.entity;version="1.0.0"
+ Import-Package: org.springframework;version="3.5.0"
+
+```
+
+Java 9 made apis become modular; we can only use required modules rather than loading entire rt.jar
+
+Types of Modules:
+1) System modules
+java --list-modules
+
+```
+java --describe-module java.logging
+java.logging@21.0.6
+exports java.util.logging
+requires java.base mandated
+provides jdk.internal.logger.DefaultLoggerFinder with sun.util.logging.internal.LoggingProviderImpl
+contains sun.net.www.protocol.http.logging
+contains sun.util.logging.internal
+contains sun.util.logging.resources
+
+```
+
+2) Named modules: recommended for new java projected development
+
+project contains module-info.java 
+Despite numerous benfits, proper moduels are still rare species in real world; even Spring framework is not modularized
+
+jars are added to module path instead of classpath
+
+3) unnamed modules
+
+4) Automatic modules
+
+
+=====
+
+Java intellij project
