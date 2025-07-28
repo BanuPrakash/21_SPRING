@@ -61,6 +61,7 @@ Java 12 (March 2019):
 2)	Better NullPointerException
 3)	Text Blocks; multiline text
 
+
 Java 14 (March 2020):
 1)	records
 2)	Hidden classes
@@ -176,4 +177,98 @@ Java Modules using Maven Modules and building a application image of less code f
 
 Maven project with 3 maven modules [each one of these will be JPMS]
 
+jlink --module-path api.jar:impl.jar:client.jar --add-modules client,api,impl --output myimage --launcher MYAPP=client/client.Main
 
+banuprakash@Banuprakashs-MacBook-Pro bin % ./MYAPP
+Logging Std Impl: Hello World!!!
+
+```
+# Use a base image with OpenJDK 21
+FROM openjdk:21-jdk
+
+# Set the working directory inside the container
+WORKDIR /app
+
+# Copy the compiled JAR file from your build output to the container
+# Replace 'your-application.jar' with the actual name of your JAR file
+COPY target/your-application.jar app.jar
+
+# Expose the port your application listens on (if applicable, e.g., for a web app)
+EXPOSE 8080
+
+# Define the command to run your application when the container starts
+ENTRYPOINT ["java", "-jar", "app.jar"]
+```
+
+Spring uses ByteBuddy / JavaAssist / CGLib libraries for reflection API and creating proxies
+My Module is not exposing our classes to them for reflection.
+
+```
+module spring.demo {
+    // automatic modules
+    requires spring.core;
+    requires spring.boot;
+    requires spring.context;
+    requires spring.beans;
+    requires spring.boot.autoconfigure;
+
+    opens com.example.springdemo to
+            spring.core, spring.beans, spring.context;
+
+    opens com.example.springdemo.entity to org.hibernate;
+}
+
+```
+
+Java 9: Improved try with resource Blocks
+
+```
+    class MyThread extends Thread implements AutoClosable {
+        ...
+        @Override
+        public void close() throws Exception {
+
+        }
+    }
+
+    Older Java 7:
+    try (MyThread th = new MyThread()) {
+        ...
+        th.doSomething();
+    } catch(Exception ex) { 
+    }
+
+    With Java 9:
+    MyThread th = new MyThread();
+    try (th) {
+        ...
+    } catch(Exception ex) {
+
+    }
+    no need for finally block
+```
+
+Java 10: var keyword
+var is an inference type. Compiler will inter the type; not dynamic typing like JavaScript var
+
+java 13: Pattern Matching
+* instanceof operator enables assigning a variable as part of type check, cleaner code
+* enhanced switch, switch as functional, arrow vs yield
+
+java 14: record
+Special type designed to serve as efficeitn way to declare an immutable DTO;
+reduces boilerplate code
+
+```
+record Product(String title, double price) {}
+
+Same as creating a Product class with Parameterized constructor, getters, hashCode, equals, toString
+No setters
+
+Product p = new Product("iPhone", 89000.00);
+
+p.title(); p.price();
+
+Not understood by frameworks like Hibernate / Spring --> they use getXXX() and setXXX(); --> can use lombok
+
+``
