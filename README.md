@@ -166,8 +166,14 @@ jars are added to module path instead of classpath
 3) unnamed modules
 
 4) Automatic modules
-
-
+    Example: spring.core is added to module path and not classpath; spring.core becomes automatic module
+    module shopapp {
+        requires spring.core;
+    }
 =====
 
-Java intellij project
+Java Modules using Maven Modules and building a application image of less code footprint
+
+Maven project with 3 maven modules [each one of these will be JPMS]
+
+
