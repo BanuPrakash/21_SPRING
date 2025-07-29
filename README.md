@@ -348,6 +348,60 @@ sealed, final, non-sealed
     <product></product>
 
     non-sealed class Element extends Node {
-        
+
     }
+
+```
+
+========
+
+
+Java 12 (March 2019):
+ClassLoader --> loads the class
+* findLoadedClass()
+* loadClass()
+* findSystemClass()
+* defineClass()
+* verify()
+
+Time spent for loading during startup.
+
+1)	Defaulting Class Data Sharing [CDS]
+In Java 6, we had to explictly configure, it became default in java 12
+
+classlist in JDK
+
+2)	Application Data Sharing
+for classes other than JDK provided api classes
+
+https://github.com/spring-projects/spring-petclinic
+
+```
+./mvnw clean package -Dmaven.test.skip=true
+
+java -jar target/spring-petclinic-3.5.0-SNAPSHOT.jar
+
+Started PetClinicApplication in 5.518 seconds 
+
+Steps for appCDS:
+
+https://docs.spring.io/spring-boot/reference/packaging/efficient.html
+
+ java -Djarmode=tools -jar target/spring-petclinic-3.5.0-SNAPSHOT.jar extract
+
+
+java -XX:ArchiveClassesAtExit=./application.jsa -Dspring.context.exit=onRefresh -jar \
+spring-petclinic-3.5.0-SNAPSHOT/spring-petclinic-3.5.0-SNAPSHOT.jar
+
+Or
+
+java -XX:ArchiveClassesAtExit=./application.jsa -XX:DumpLoadedClassList=files.lst -Dspring.context.exit=onRefresh -jar \
+spring-petclinic-3.5.0-SNAPSHOT/spring-petclinic-3.5.0-SNAPSHOT.jar
+
+
+java -XX:SharedArchiveFile=application.jsa -jar \
+spring-petclinic-3.5.0-SNAPSHOT/spring-petclinic-3.5.0-SNAPSHOT.jar
+
+Started PetClinicApplication in 1.495 seconds (process running for 1.814)
+
 ```
