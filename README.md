@@ -404,4 +404,35 @@ spring-petclinic-3.5.0-SNAPSHOT/spring-petclinic-3.5.0-SNAPSHOT.jar
 
 Started PetClinicApplication in 1.495 seconds (process running for 1.814)
 
+AOT, GraalVM
 ```
+
+Java 21: Virtual Threads
+
+Virtual Threads are lightweight and created by JVM, not managed by the OS
+Thousands can be created without worryning about memory.
+Platform Thread -- each thread by default needs 1MB
+
+Virtual Thread are perfect for:
+1) Web servers
+2) APis that call many APIs or database [assume here we have 50 connections]
+
+How do they work?
+* start virtual thread to handle a task
+* If it needs to wait (DB or API), JVM parks it.
+* Real OS thread is freed and can be used for sone other work
+* When response comes back, JVM resumes the Virtual thread;
+Virtual thread can now pick any of PT --> OS Thread
+
+--> VT --> PT --> OS for task depending of CPU
+--> VT --> DB call here release PT --> OS thread
+once DB returns a value --> pick any available PT --> OS thread
+
+===============
+
+brew install siege
+brew install hey
+
+ siege http://localhost:1234/example -c 200 -r 5
+ hey http://localhost:1234/example -c 200 -t 1000
+

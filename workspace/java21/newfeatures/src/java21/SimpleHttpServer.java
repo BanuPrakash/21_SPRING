@@ -50,7 +50,7 @@ class SimpleWork {
         this.withLock = withLock;
         if (withLock) {
             for (int i = 0; i < workersCount; i++) {
-                workers.add(new SimpleWork());
+                workers.add(new SimpleWork()); // 50 DB connections
             }
         }
     }
@@ -76,17 +76,23 @@ public class SimpleHttpServer {
 
     public static void main(String[] args) throws IOException {
         HttpServer httpServer = HttpServer
-                .create(new InetSocketAddress(8081), 0);
+                .create(new InetSocketAddress(1234), 0);
         boolean withLock = true;
-        boolean virtual = false;
+        boolean virtual = true;
+        // http://localhost:1234/example
         httpServer.createContext("/example", new SimpleDelayedHandler(withLock));
         if (virtual) {
             httpServer.setExecutor(
                     Executors.newVirtualThreadPerTaskExecutor());
         } else {
+            // platform thread
             httpServer.setExecutor(
                     Executors.newFixedThreadPool(200));
         }
         httpServer.start();
+
+        Thread.ofPlatform().start(() -> System.out.println("Hello"));
+
+        Thread.ofVirtual().start(() -> System.out.println("Hello Virtual"));
     }
 }
