@@ -11,7 +11,9 @@ public class VarExample {
     public static void main(String[] args) {
 //        Map<String, List<String>> data = getData(); // old way
         var data = getData();
-
+        // Map<String,Map<String, List<Employee>> data;
+        // data.forEach( (k,v) -> {})
+        // someOtherFn(data);
 //        var name = null;  //not valid
         int var = 10; // works file
 

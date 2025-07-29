@@ -302,3 +302,52 @@ Real World use cases:
 1) Dynamic proxies for lazy loading
 2) Telemetry like scenarios like profile, count, gauge
 3) bytecode instrumentaion for optimzation
+
+===============
+
+Day 2
+
+Java 17 :Sealed class 
+Explicit control over which classes can extend or implement a interface
+
+Why?
+* Prevent unwanted subclassing
+* Safer Switch pattern matching
+* API contracts are cleaner
+* Better modeling / tooling
+
+sealed, final, non-sealed
+
+```
+    public sealed class JsonValue permits JsonObject, JsonPrimitive, JsonArray{
+
+    }
+
+    public final class JsonObject extends JsonValue {
+
+    }
+
+    public sealed class JsonPrimitive extends JsonValue permits JsonString, JsonNumber, JsonBoolean{
+        
+    }
+
+    public final class JsonArray extends JsonValue {
+        
+    }
+
+    // need to make below code invalid
+    public class JsonSomeType extends JsonValue {
+        
+    }
+
+    sealed class Node permits Element, CDATASection, CharacterData, Comment {
+
+    }
+
+    org.w3c.dom.Element --> dozens of HTML element sub classes, we might create our own shadow elements like
+    <product></product>
+
+    non-sealed class Element extends Node {
+        
+    }
+```
