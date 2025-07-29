@@ -39,7 +39,9 @@ Java 9 (September 2017):
 1)	Modules
 2)	JShell
 3)	Improved try with resource Blocks
-4)	Immutable Collection
+4)	Immutable Collection [of]
+List<String> strList = List.of("A", "B", "C");
+earlier we use Collections.toImmutableCollection(..);
 
 Java 10 (March 2018):
 1)	Using var keyword
@@ -47,9 +49,21 @@ Java 10 (March 2018):
 Java 11 (September 2018):
 1)	String API updates
 a.	isBlank
+String s = " ";
+s.isBlank();
+
 b.	lines
+
+String str = """
+    Hello World \n
+    Good Day \n
+
+""";
 c.	stripLeading() and stripTrailing()
 d.	repeat()
+
+"*".repeat(10);
+
 2)	isEmpty() on Optional class on top of existing isPresent() 
 
 Java 12 (March 2019):
@@ -435,4 +449,13 @@ brew install hey
 
  siege http://localhost:1234/example -c 200 -r 5
  hey http://localhost:1234/example -c 200 -t 1000
+
+===
+
+Java 21: Preview []
+String Template : interpolation to Java
+
+javac --release 21 --enable-preview YourClass.java
+
+JShell for REPL.
 
