@@ -596,5 +596,47 @@ It's a highly opiniated frameowrk, where lots of configurations comes out of the
 =================
 
 
+appService
 
+userRepoDatabaseImpl
+
+Field userRepo AppService required a single bean, but 2 were found:
+	- userRepoDatabaseImpl:	
+    - userRepoMongoImpl: 
+
+
+Solution 1:
+@Primary
+
+Solution 2:
+@Qualifier
+
+
+```
+@Service
+public class AdminService {
+    @Qualifier("userRepoMongoImpl")
+    @Autowired
+    private UserRepo userRepo; // wiring is done by Spring Container
+
+    public void newUser() {
+        userRepo.register();
+    }
+}
+
+```
+
+Solution 3: @Profile
+
+Solution 4: @ConditionalOnMissingBean
+
+```
+@ConditionalOnMissingBean(name="userRepoMongoImpl")
+@Repository
+public class UserRepoDatabaseImpl implements UserRepo{
+
+@Repository
+public class UserRepoMongoImpl implements UserRepo{
+
+```
 
