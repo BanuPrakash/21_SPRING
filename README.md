@@ -459,3 +459,142 @@ javac --release 21 --enable-preview YourClass.java
 
 JShell for REPL.
 
+===============================
+
+* Modules - JPMS
+* record - DTOs, immutable data object
+* sealed classes - permits, sealed, final , non-sealed
+* Pattern matching - instanceof , switch arrow, yield, functional switch ,switch with sealed
+* Virtual Threads
+-Xss:64KB 
+* CDS and AppCDS
+
+=====================
+
+Web Container for web components like Servlet/ JSP/ Filter/ Listener, 
+EJB Container for distributed computing
+ServletContext is an interface using which you can access web container
+
+Spring Framework and Spring Boot Framework
+ApplicaitonContext/BeanFactory is an interface using which you can access spring container
+
+Spring provides a Container [layer on top of JVM],
+minimalistic capability of this container is life cycle management and wiring dependencies.
+
+Any object managed by spring container is termed as a bean.
+
+SOLID Design Principles:
+D - Dependency Injection
+
+```
+
+UI -> Service --> Repository --> Database Connection
+
+public class Client {
+    Service service = new Service();
+}
+
+public class SErvice {
+    UserRepo userRepo = new UserRepo();
+}
+
+
+public class UserRepo {
+    Connection con = DataSource.getConnection();
+}
+
+Dependency Injection : Flow is reveresed, InversionOfControl
+
+Loosely coupled application
+UI <-- Service <-- Repository <-- Database Connection
+
+```
+
+Metadata in the form of XML or Annotation should be provided to Spring Framework for managing the beans.
+
+Life Cycle Management:
+Spring instantiates objects of classes which has one of these annotations at class level:
+1) @Component
+2) @Repository
+3) @Service
+4) @Configuration
+5) @Controller
+6) @RestController
+7) @ControllerAdvice
+8) @ShellComponent
+
+Wiring:
+1) @Autowired - Setter DI
+2) Constructor DI
+```
+    beans.xml
+    <bean id="userRepo" class="pkg.UserRepositoryJdbcImpl" />
+
+```
+
+Example:
+
+```
+    public class User {
+        username;
+        password;
+    }
+
+
+    interface UserRepo {
+        void register(User user);
+    }
+
+    // CRUD operations
+    @Repository
+    class UserRepoDbImpl implements UserRepo {
+        public void register(User user) {
+            ...
+        }
+    }
+
+    @Service
+    class AppService {
+        @Autowired
+        UserRepo userRepo;
+
+        public void newUser(User user) {
+            userRepo.register(user);
+        }
+    }
+
+ApplicationContext context =  new ClassPathXmlApplicationContext("beans.xml");
+
+
+ApplicationContext context = new AnnotationConfigApplicationContext();
+context.scan("com.adobe.prj"); 
+context.refresh();
+
+in Spring Boot:
+ApplicationContext context = SpringApplication.run(SpringDemoApplication.class, args);
+
+userRepoDbImpl
+
+AppService appService = context.getBean("appService", AppService.class);
+appService.newUser(new User("roger", "secret123"));
+
+```
+
+Spring Boot framework is a framework on top of Spring Framework.
+It's a highly opiniated frameowrk, where lots of configurations comes out of the box.
+1) While using database; database connection pool is created using HikariCP library
+2) While using JPA/ORM; hibernate is configured out of the box.
+3) While using web application; Tomcat web server is configured by default along with Java to JSON and JSON to Java conversion using Jackson libary 
+
+
+@SpringBootApplication is 3 in one:
+1) @Configuration
+2) @ComponentScan similar to context.scan("com.adobe.prj"); 
+3) @EnableAutoConfiguration --> builtin beans like Tomcat / DatabaseConnection pool
+
+
+=================
+
+
+
+
