@@ -640,3 +640,6 @@ public class UserRepoMongoImpl implements UserRepo{
 
 ```
 
+Factory Methods with @Bean
+* Need to manage objects of 3rd party classes which can't have any of the above 8 annotations
+* Object creation is complex, not just invoking constructor
