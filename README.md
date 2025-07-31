@@ -777,3 +777,31 @@ Good for Bottom to Top approach
 
 CommandLineRunner is an interface provided by Spring Boot that allows for the execution of specific code [run()] immediately after the Spring Boot application context has been loaded and initialized, but before the application starts processing requests. 
 
+
+JPA and ORM can be used withount Spring Framework.
+
+```
+
+```
+Try creating CustomerRepo and link it in RentalService
+Write CustomerClient
+
+insert into customers values('roger@adobe.com','Roger','Smith');
+insert into customers values('anne@adobe.com','Anne','Hathaway');
+
+```
+
+Mapping Associations:
+1) One To Many
+2) Many To One
+3) One To one
+4) Many To Many
+
+https://martinfowler.com/bliki/BoundedContext.html
+
+https://www.database-answers.com/data_models/
+
+
+
+
+
