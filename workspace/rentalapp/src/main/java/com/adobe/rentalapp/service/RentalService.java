@@ -1,10 +1,14 @@
 package com.adobe.rentalapp.service;
 
+import com.adobe.rentalapp.entity.Rental;
 import com.adobe.rentalapp.entity.Vehicle;
+import com.adobe.rentalapp.repo.RentalRepo;
 import com.adobe.rentalapp.repo.VehicleRepo;
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -13,6 +17,32 @@ import java.util.Optional;
 public class RentalService {
     // no need for @Autowired setter injection; it uses Constructor DI
     private  final VehicleRepo vehicleRepo;
+    private final RentalRepo rentalRepo;
+
+    public String rentVehicle(Rental rental) {
+        rentalRepo.save(rental);
+        return "Vehicle rented!!!";
+    }
+
+
+    @Transactional
+    public String returnVehicle(int rentalId, Date returnDate) {
+        Rental rental = rentalRepo.findById(rentalId).get();
+        rental.setReturnedDate(returnDate); // DIRTY
+
+        // PULL Vehicle complete details like cost
+        Vehicle vehicle = vehicleRepo.findById(rental.getVehicle().getRegistrationNumber()).get();
+
+        long daysRented = (returnDate.getTime() - rental.getRentedDate().getTime()) / (1000 * 60 * 60 * 24);
+        if (daysRented <= 0) {
+            throw new IllegalArgumentException("Invalid rental period. Returned date must be after rented date.");
+        } else  if(daysRented == 0) {
+            daysRented = 1;
+        }
+
+        rental.setAmount(daysRented * vehicle.getCostPerDay()); // DIRTY CHECKING -- UPDATE SQL
+        return "Vehicle returned!!!";
+    }
 
     public long getVehicleCount() {
         return vehicleRepo.count();

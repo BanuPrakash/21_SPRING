@@ -802,6 +802,8 @@ https://martinfowler.com/bliki/BoundedContext.html
 https://www.database-answers.com/data_models/
 
 
+Within a Transactional boundary if an entity becomes dirty --> ORMs will flush the state to database by issuing UPDATE SQL.
+
 
 
 
