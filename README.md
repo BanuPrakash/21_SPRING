@@ -773,3 +773,4 @@ Map classes to existing tables; Alter and creating new tables are not suported;
 Good for Bottom to Top approach
 
 
+CommandLineRunner is an interface provided by Spring Boot that allows for the execution of specific code [run()] immediately after the Spring Boot application context has been loaded and initialized, but before the application starts processing requests. 
