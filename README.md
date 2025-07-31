@@ -804,16 +804,28 @@ https://www.database-answers.com/data_models/
 
 Within a Transactional boundary if an entity becomes dirty --> ORMs will flush the state to database by issuing UPDATE SQL.
 
-SQL is based on table and column names
+SELECT * FROM vehicles v WHERE v.reg_no NOT IN (     SELECT r.vehicle_fk     FROM rentals r     WHERE '2025-07-30' BETWEEN r.rent_from AND r.rent_until );
+
+===========
+
+Task : Ticket Tracking application
+
+```
+    employees
+    email | first_name
+
+    ticket
+    ticket_id | raised_date | problem | raised_by | resolved_by | resolved_date | solution
+
+    Use case 1: Raise a ticket
+
+    User case 2: 
+    get open tickets [ list ]
+    resolve a ticket
+
+```
 
 
-JP-QL is based on class and field names
-
-select reg_no, fuel_type from vehicles;
-
-
-
-select registrationNumber, fuelType from Vehicle
 
 
 
