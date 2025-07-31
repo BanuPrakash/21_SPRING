@@ -755,6 +755,21 @@ Spring boot application with following dependencies:
 VehicleRentalApplication
 
 Note: @Entity and @Id are compulsory; @Column and @Table are optional
+https://docs.spring.io/spring-boot/appendix/application-properties/index.html
 
+1) spring.jpa.hibernate.ddl-auto=create
+
+create tables when application starts; drop tables when application terminates
+Good for testing purpose only
+
+2) spring.jpa.hibernate.ddl-auto=update
+if table exists map class to existing table
+if table is not present, create tables based on mapping
+if required alter table [change column length, add new column]
+Good for Top to bottom approach
+
+3) spring.jpa.hibernate.ddl-auto=verify
+Map classes to existing tables; Alter and creating new tables are not suported;
+Good for Bottom to Top approach
 
 
