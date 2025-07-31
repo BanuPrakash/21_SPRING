@@ -19,6 +19,12 @@ public class RentalService {
     private  final VehicleRepo vehicleRepo;
     private final RentalRepo rentalRepo;
 
+    // no need for @Transactional
+    public Vehicle updateCost(String reg, double cost) {
+        vehicleRepo.updateCostPerDay(reg, cost); // custom SQL
+        return getVehicleByRegNo(reg);
+    }
+
     public String rentVehicle(Rental rental) {
         rentalRepo.save(rental);
         return "Vehicle rented!!!";

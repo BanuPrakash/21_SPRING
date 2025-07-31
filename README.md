@@ -804,6 +804,23 @@ https://www.database-answers.com/data_models/
 
 Within a Transactional boundary if an entity becomes dirty --> ORMs will flush the state to database by issuing UPDATE SQL.
 
+SQL is based on table and column names
+
+
+JP-QL is based on class and field names
+
+select reg_no, fuel_type from vehicles;
+
+
+
+select registrationNumber, fuelType from Vehicle
+
+
+
+
+
+
+
 
 
 
