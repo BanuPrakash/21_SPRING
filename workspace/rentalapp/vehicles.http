@@ -1,0 +1,14 @@
+### @name="get all vehicles"
+GET http://localhost:8080/api/vehicles
+Accept-Language: application/json
+
+### @name="Add a Vehicle"
+POST http://localhost:8080/api/vehicles
+Accept-Language: application/json
+Content-Type: application/json
+
+{
+  "registrationNumber": "GA05A1411",
+  "fuelType": "PETROL",
+  "costPerDay": 2000.00
+}
