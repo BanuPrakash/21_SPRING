@@ -30,6 +30,9 @@ public class RentalService {
         return "Vehicle rented!!!";
     }
 
+    public List<Rental> getRentals() {
+        return rentalRepo.findAll();
+    }
 
     @Transactional
     public String returnVehicle(int rentalId, Date returnDate) {

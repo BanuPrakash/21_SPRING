@@ -1,0 +1,19 @@
+
+### @name="Rent a Vehicle"
+POST http://localhost:8080/api/rentals
+Accept-Language: text/plain
+Content-Type: application/json
+
+{
+  "customer": {
+    "email": "anne@adobe.com"
+  },
+  "vehicle": {
+    "registrationNumber": "UP41A900"
+  },
+  "rentedDate": "2025-08-01"
+}
+
+### @name="get rentals"
+GET http://localhost:8080/api/rentals
+Accept-Language: application/json

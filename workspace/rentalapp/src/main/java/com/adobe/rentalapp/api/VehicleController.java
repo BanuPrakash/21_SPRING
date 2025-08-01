@@ -3,6 +3,7 @@ package com.adobe.rentalapp.api;
 import com.adobe.rentalapp.entity.Vehicle;
 import com.adobe.rentalapp.service.RentalService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -33,12 +34,13 @@ public class VehicleController {
     }
 
     @PostMapping
+    @ResponseStatus(HttpStatus.CREATED)
     public  Vehicle addVehicle(@RequestBody Vehicle vehicle) {
         return service.addVehicle(vehicle);
     }
 
     // PATCH http://localhost:8080/api/vehicles/DH02AE1241?cost=5100
-    @PatchMapping("api/vehicles/{no}")
+    @PatchMapping("/{no}")
     public Vehicle modifyCostOfRentForVehicle(@PathVariable("no") String regNo, @RequestParam("cost") double cost) {
         return service.updateCostOfRental(regNo, cost);
     }
