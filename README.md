@@ -1000,6 +1000,27 @@ After (Finally) Advice: Executes after the join point, regardless of its outcome
 Around Advice: Surrounds the join point, allowing custom behavior before and after its execution, and potentially controlling whether the join point proceeds.
 
 
+try {
+    actualMethodCall()
+} catch(Exception ex) {
+    aspect related
+    throw ex;
+}
+
+
+Actual Code after proxy:
+ 
+ ```
+  Object[] args = jp.getArgs();
+  log.info("Called :" + jp.getSignature());
+  for(Object arg: args) {
+            log.info("Argument : " + arg);
+  }
+ rentalRepo.save(rental);
+ return "Vehicle rented!!!";
+
+```
+
 
 
 
