@@ -12,3 +12,17 @@ Content-Type: application/json
   "fuelType": "PETROL",
   "costPerDay": 2000.00
 }
+
+### @name="get all vehicles by type"
+GET http://localhost:8080/api/vehicles?fuelType=PETROL
+Accept-Language: application/json
+
+
+### @name="get vehicle by registration Number"
+GET http://localhost:8080/api/vehicles/DH02AE1241
+Accept-Language: application/json
+
+
+### @name="modify vehicle costPerDay"
+PATCH http://localhost:8080/api/vehicles/DH02AE1241?cost=5210
+Accept-Language: application/json

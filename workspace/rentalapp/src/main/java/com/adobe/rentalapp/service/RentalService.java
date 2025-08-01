@@ -67,6 +67,11 @@ public class RentalService {
         return vehicleRepo.findAll();
     }
 
+
+    public List<Vehicle> getByType(String fuelType) {
+        return vehicleRepo.findByFuelType(fuelType);
+    }
+
     public Vehicle getVehicleByRegNo(String regNo) {
         Optional<Vehicle> opt = vehicleRepo.findById(regNo);
         if(opt.isPresent()) {
