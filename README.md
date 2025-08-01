@@ -825,6 +825,132 @@ Task : Ticket Tracking application
 
 ```
 
+====================================
+
+Spring Data JPA module: hibernate as ORM Provider and hikariCP for database connection pool
+application.properties 
+JpaRepository interface : findAll, findById, save, delete
+Custom Projections findByXXXX(); And Or
+We can also use SQL or JP-QL to write custom queries; can be used for scalar values, joins
+@Modifying for custom UPDATE / INSERT or DELETE query
+@Transactional --> Atomic operation; if no exception occurs within the method marked with @Transactional it commits else it rollsback. @Transcational for DIRTY checking
+
+====================================
+
+Building RESTful Web Services
+
+REST REpresentational State Transfer is architectural style for distributed systems,
+Roy Fielding 2000
+
+Server Side Rendering
+Cons
+* Heavy payload [html / pdf]
+* Client needs to know how to handle HTML / PDF [ Browser]
+* Can't have heterogenous clients like Mobile / Tv / Desktop
+
+Pros
+* Thin client
+* SEO
+
+Client Side Rendering
+Pros:
+* Can have heterogenous clients like Mobile / Tv / Desktop / Web
+* Light payload like JSON / XML
+* Clients can consume and create UI as per requirement
+
+Cons:
+* Not SEO
+* Heavy client 
+
+==============================
+
+Resource --> information on server that we can name like database / file / printer /image
+
+Representation --> state of the resource at a given point of time
+
+Content Negotiation:
+Asking for a suitable presentation by a client for the representation
+```
+JSON
+{
+    "printer": "HP Printer",
+    "status" : "on
+}
+
+XML
+<printer>
+    <name>Hp Printer</name>
+    <status> on </status>
+</printer>
+```
+
+Uniform Interface: Uniform Identifier
+http://amazon.com/mobiles/iPhone16
+
+Client - Server: decoupling
+Stateless: No conversational state of client ; every request from client should be treated as a new one
+Cacheable: Response should be cacheable
+
+HTTP Methods and URI
+POST --> CREATE
+GET --> READ
+PUT / PATCH --> UPDATE
+DELETE --> DELETE
+
+
+=============
+
+Spring MVC Web module
+* Tomcat Embedded Web Server / Container
+    --> Alternates are Jetty / Netty ...
+* DispatcherServlet
+* HandlerMapping
+* Jackson library for Java <--> JSON conversion
+ --> alternates are GSON / Jettison / Moxy
+
+```
+    POST api/vehicles
+    Accept: application/json
+    Content-type: application/json
+
+    {
+        "registrationNumber": "DH01ED4111",
+        "fuelType" : "ELECTRIC",
+        "costPerDay" : 8000
+    }
+
+
+
+    @RestController
+    @RequestMapping("api/vehicles")
+    public class VehicleController {
+        RentalService service;
+        @GetMapping()
+        public List<Vehicle> getVehicles() {
+            return service.getVehicles();
+        }
+
+        @PostMapping
+        public Vehicle addVehicle(Vehicle v) {
+            return service.addVehicle(v);
+        }
+    }
+
+    @RestController
+    @RequestMapping("api/rentals")
+    public class RentalController {
+        ..
+    }
+```
+@Controller is for Server Side Rendering to return pages
+@RestController is for Client side rendering to send different formats of representation
+
+Accept --> what server should send to client
+Content-type -> what type of payload is sent by client
+
+
+
+
 
 
 

@@ -50,6 +50,11 @@ public class RentalService {
         return "Vehicle returned!!!";
     }
 
+    @Transactional
+    public Vehicle updateCostOfRental(String regNo, double cost) {
+        vehicleRepo.updateCostPerDay(regNo, cost);
+        return getVehicleByRegNo(regNo);
+    }
     public long getVehicleCount() {
         return vehicleRepo.count();
     }
