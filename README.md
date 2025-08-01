@@ -952,8 +952,52 @@ Content-type -> what type of payload is sent by client
 @ControllerAdvice is meant for a Global Exception handling;
 Gets called when an exception is thrown from @Controller or @RestController
 
+=========================
+
+```
+    Code Tangling:
+    public void transferFunds(Account fromAcc, Account toAcc, double amt) {
+        logger.info("..."); // logger
+        Transaction tx = em.getSession().beginTransaction(); // tx
+        if(securityContext.getPermission() ...) // security
+        try {
+            logger.info(..);
+            // business logic
+            fromAcc.debit(amt);
+            logger.info(...)
+            // business logic
+            toAcc.credit(amt);
+            logger.info(..);
+        
+            tx.commit();
+        } catch(DataAccessException ex) {
+            tx.rollback();
+        }
 
 
+
+    }
+
+```
+AOP: Aspect Oriented Programming to eliminate Code tangling and code scattering
+
+Aspect:
+A modular unit encapsulating a cross-cutting concern, such as logging, security, or transaction management, that applies across multiple parts of an application.
+
+Join Point:
+A specific point in the execution of a program where an aspect can be applied. 
+Examples include method execution, exception handling. 
+
+Pointcut:
+selected specific join points where advice should be applied.
+
+Advice:
+The action taken by an aspect at a particular join point. Different types of advice exist: 
+Before Advice: Executes before the join point.
+After Returning Advice: Executes after the join point completes normally (returns without an exception). 
+After Throwing Advice: Executes if the join point throws an exception.
+After (Finally) Advice: Executes after the join point, regardless of its outcome (normal return or exception). 
+Around Advice: Surrounds the join point, allowing custom behavior before and after its execution, and potentially controlling whether the join point proceeds.
 
 
 
