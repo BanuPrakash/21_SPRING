@@ -1,6 +1,7 @@
 package com.adobe.rentalapp.api;
 
 import com.adobe.rentalapp.entity.Vehicle;
+import com.adobe.rentalapp.service.EntityNotFoundException;
 import com.adobe.rentalapp.service.RentalService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -29,7 +30,7 @@ public class VehicleController {
     // Using Path Parameter [/]
     // GET http://localhost:8080/api/vehicles/GA05A1411
     @GetMapping("/{no}")
-    public Vehicle getByRegistrationNumber(@PathVariable("no") String regNo) {
+    public Vehicle getByRegistrationNumber(@PathVariable("no") String regNo) throws EntityNotFoundException {
         return service.getVehicleByRegNo(regNo);
     }
 
@@ -41,7 +42,7 @@ public class VehicleController {
 
     // PATCH http://localhost:8080/api/vehicles/DH02AE1241?cost=5100
     @PatchMapping("/{no}")
-    public Vehicle modifyCostOfRentForVehicle(@PathVariable("no") String regNo, @RequestParam("cost") double cost) {
+    public Vehicle modifyCostOfRentForVehicle(@PathVariable("no") String regNo, @RequestParam("cost") double cost) throws EntityNotFoundException {
         return service.updateCostOfRental(regNo, cost);
     }
 

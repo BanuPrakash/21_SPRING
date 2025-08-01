@@ -949,6 +949,9 @@ Accept --> what server should send to client
 Content-type -> what type of payload is sent by client
 
 
+@ControllerAdvice is meant for a Global Exception handling;
+Gets called when an exception is thrown from @Controller or @RestController
+
 
 
 

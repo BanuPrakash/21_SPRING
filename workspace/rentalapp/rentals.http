@@ -1,17 +1,27 @@
 
 ### @name="Rent a Vehicle"
+#POST http://localhost:8080/api/rentals
+#Accept-Language: text/plain
+#Content-Type: application/json
+#
+#{
+#  "customer": {
+#    "email": "anne@adobe.com"
+#  },
+#  "vehicle": {
+#    "registrationNumber": "UP41A900"
+#  },
+#  "rentedDate": "2025-08-01"
+#}
+
 POST http://localhost:8080/api/rentals
 Accept-Language: text/plain
 Content-Type: application/json
 
 {
-  "customer": {
-    "email": "anne@adobe.com"
-  },
-  "vehicle": {
-    "registrationNumber": "UP41A900"
-  },
-  "rentedDate": "2025-08-01"
+    "email": "anne@adobe.com",
+    "registrationNumber": "DH02AE1241",
+    "rentedDate": "2025-08-03"
 }
 
 ### @name="get rentals"

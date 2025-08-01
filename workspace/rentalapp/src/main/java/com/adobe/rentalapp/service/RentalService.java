@@ -20,7 +20,7 @@ public class RentalService {
     private final RentalRepo rentalRepo;
 
     // no need for @Transactional
-    public Vehicle updateCost(String reg, double cost) {
+    public Vehicle updateCost(String reg, double cost)  throws EntityNotFoundException{
         vehicleRepo.updateCostPerDay(reg, cost); // custom SQL
         return getVehicleByRegNo(reg);
     }
@@ -54,7 +54,7 @@ public class RentalService {
     }
 
     @Transactional
-    public Vehicle updateCostOfRental(String regNo, double cost) {
+    public Vehicle updateCostOfRental(String regNo, double cost)  throws EntityNotFoundException {
         vehicleRepo.updateCostPerDay(regNo, cost);
         return getVehicleByRegNo(regNo);
     }
@@ -75,11 +75,11 @@ public class RentalService {
         return vehicleRepo.findByFuelType(fuelType);
     }
 
-    public Vehicle getVehicleByRegNo(String regNo) {
+    public Vehicle getVehicleByRegNo(String regNo) throws EntityNotFoundException {
         Optional<Vehicle> opt = vehicleRepo.findById(regNo);
         if(opt.isPresent()) {
             return opt.get();
         }
-        return null;
+       throw new EntityNotFoundException("Vehicle with Registration Number :" + regNo + " doesn't exist!!!");
     }
 }
