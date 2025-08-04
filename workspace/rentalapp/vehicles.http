@@ -26,3 +26,17 @@ Accept-Language: application/json
 ### @name="modify vehicle costPerDay"
 PATCH http://localhost:8080/api/vehicles/DH02AE1241?cost=5210
 Accept-Language: application/json
+
+
+### @name="get vehicle by registration Number and ETag"
+GET http://localhost:8080/api/vehicles/etag/DH02AE1241
+Accept-Language: application/json
+
+### @name="get vehicle by registration Number alread fetched by client and ETag"
+GET http://localhost:8080/api/vehicles/etag/DH02AE1241
+Accept-Language: application/json
+If-None-Match: "1426072811"
+
+### @name="get vehicle by registration Number Cache"
+GET http://localhost:8080/api/vehicles/cache/DH02AE1241
+Accept-Language: application/json

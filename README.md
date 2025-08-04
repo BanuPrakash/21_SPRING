@@ -1058,6 +1058,39 @@ MethodArgumentNotValidException:
 
 ```
 
+Caching:
+1) client level
+Cache-Control: max-age=60*60*24
+ETag (entity tag)
+
+2) Web Server Spring Boot
+
+```
+     <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-cache</artifactId>
+      </dependency>
+
+      We get ConcurrentMapCache as the default cache
+      Caffiene Cache: Caffeine is a high-performance, in-memory Java caching library known for its near-optimal hit rates and efficient implementation.
+
+      Redis Cache: External
+
+@Configuration
+@EnableCaching
+public class AppConfig {
+
+@Cacheable(value = "vehiclesCache", key = "#regNo")
+@CachePut(value = "vehiclesCache", key = "#regNo")
+@CacheEvict(value = "vehiclesCache", key = "#regNo")
+
+```
+
+3) Database
+* Swarm Cache
+* EHCahe
+
+
 
 
 
