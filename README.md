@@ -1021,6 +1021,45 @@ Actual Code after proxy:
 
 ```
 
+=========================
+
+@RestController, @RequestMapping, @GetMapping, @PostMapping, @PutMapping, @PatchMapping, @DeleteMapping, @PathVariable, @RequestBody, @RequestParam
+
+AOP: Aspect, JoinPoint ,PointCut, Advice [Before, After, Around, AfterThrowing]
+@ControllerAdvice [ built-in advice which can be used to handle exceptions thrown from Controller or RestController -- AfterThrowing]
+
+=========
+
+Day 6:
+
+Validation:
+
+```
+Java Beans validation
+https://jakarta.ee/specifications/bean-validation/3.0/apidocs/jakarta/validation/constraints/package-summary
+
+  <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-validation</artifactId>
+  </dependency>
+
+public String rentVehicle(@RequestBody @Valid RentalDTO rentalDTO) {
+
+```
+
+MethodArgumentNotValidException:
+
+```
+[Field error in object 'rentalDTO' on field 'email':  default message [Email is required]] 
+
+[Field error in object 'rentalDTO' on field 'rentedDate':  default message [Rented Date should be present or future date!!!]] 
+
+[Field error in object 'rentalDTO' on field 'registrationNumber': default message [Registration Number D2AE1241 is not valid!!!]] ]
+
+```
+
+
+
 
 
 

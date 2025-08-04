@@ -24,6 +24,18 @@ Content-Type: application/json
     "rentedDate": "2025-08-03"
 }
 
+### @name="Invalid Rental"
+
+POST http://localhost:8080/api/rentals
+Accept-Language: text/plain
+Content-Type: application/json
+
+{
+  "email": "roger@gmail.com",
+  "registrationNumber": "DA02AE1241",
+  "rentedDate": "2025-08-03"
+}
+
 ### @name="get rentals"
 GET http://localhost:8080/api/rentals
 Accept-Language: application/json
