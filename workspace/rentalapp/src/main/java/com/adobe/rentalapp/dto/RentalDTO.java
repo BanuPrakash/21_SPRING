@@ -16,8 +16,9 @@ import java.util.Date;
 @Data
 @Builder
 public class RentalDTO {
-    @NotBlank(message = "Email is required")
-    @Email(message = "Entered ${validatedValue} is not a proper email")
+//    @NotBlank(message = "Email is required")
+@NotBlank(message = "{email.required}")
+    @Email(message = "{email.incorrect}")
     private String email;
 
     //UP41AE900

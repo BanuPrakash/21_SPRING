@@ -27,11 +27,12 @@ Content-Type: application/json
 ### @name="Invalid Rental"
 
 POST http://localhost:8080/api/rentals
-Accept-Language: text/plain
+Accept: application/json
 Content-Type: application/json
+Accept-Language: fr
 
 {
-  "email": "roger@gmail.com",
+  "email": "rogergmail.com",
   "registrationNumber": "DA02AE1241",
   "rentedDate": "2025-08-03"
 }
