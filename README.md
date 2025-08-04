@@ -1090,6 +1090,39 @@ public class AppConfig {
 * Swarm Cache
 * EHCahe
 
+===================================
+
+Spring Application Event and Async operations
+
+Existing blocking Synchronous Code:
+
+Discharge Patient
+```
+    // 7 seconds to complete the method
+    // tightly coupled
+    public String dischargePatient(String id) {
+        // sequential execution of task by task
+        billingService.processBill(id); //blocking 2 sec
+        medicalService.updatePatientHistory(id);//blocking 3sec
+        houseKeepingService.cleanAndAssign();//blocking 1 sec
+        notificationService.notifyPatient(id);//blocking 1 sec
+    }
+
+```
+
+Blocking Tomcat Thread
+
+Thread[#48,http-nio-8080-exec-1,5,main] :  bill process P521A
+Thread[#48,http-nio-8080-exec-1,5,main] :  notify patient P521A
+
+
+Using default Thread pool provided by Spring Framework
+@EnableAsync on any config file
+@Async
+
+Thread[#65,task-1,5,main] :  bill process P521A
+Thread[#66,task-2,5,main] :  notify patient P521A
+
 
 
 
