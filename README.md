@@ -1123,7 +1123,59 @@ Using default Thread pool provided by Spring Framework
 Thread[#65,task-1,5,main] :  bill process P521A
 Thread[#66,task-2,5,main] :  notify patient P521A
 
+==================================
 
+https://jsonplaceholder.typicode.com/users
+
+https://jsonplaceholder.typicode.com/posts
+
+===========
+
+```
+RestTemplate
+    restTemplate.getForObject(...)
+    restTemplate.getForEntity(..)
+    restTemplate.postForObject("url", String.class, Product.class)
+    public List<Product> getListOfMyObjects() {
+        String url = "http://localhost:8080/api/products"; // Replace with your actual API endpoint
+
+        ResponseEntity<List<Product>> response = restTemplate.exchange(
+            url,
+            HttpMethod.GET,
+            null, // HttpEntity (can be null for GET requests without a body)
+            new ParameterizedTypeReference<List<Product>>() {} // Crucial for correct type inference
+        );
+
+        return response.getBody();
+    }
+
+
+   public class MyApiInterceptor implements HandlerInterceptor {
+
+        @Override
+        public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
+            // Logic to execute BEFORE the controller method is called
+            // e.g., logging, authentication, request validation
+            System.out.println("Pre-handle logic for: " + request.getRequestURI());
+            return true; // Return true to proceed with the request, false to stop
+        }
+
+        @Override
+        public void postHandle(HttpServletRequest request, HttpServletResponse response, Object handler, ModelAndView modelAndView) throws Exception {
+            // Logic to execute AFTER the controller method has executed, but BEFORE the response is sent
+            // e.g., modifying model data, adding headers
+            System.out.println("Post-handle logic for: " + request.getRequestURI());
+        }
+
+        @Override
+        public void afterCompletion(HttpServletRequest request, HttpServletResponse response, Object handler, Exception ex) throws Exception {
+            // Logic to execute AFTER the complete request is finished (after view rendering)
+            // e.g., cleanup, logging exceptions
+            System.out.println("After completion logic for: " + request.getRequestURI());
+        }
+    }
+
+```
 
 
 

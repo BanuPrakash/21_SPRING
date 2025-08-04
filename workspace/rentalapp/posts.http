@@ -1,0 +1,4 @@
+### @name="Get Posts aggregate"
+
+GET http://localhost:8080/api/posts
+Accept: application/json
