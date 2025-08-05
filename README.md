@@ -1394,6 +1394,37 @@ ab -c 5 -n 30 http://localhost:8080/hello
 
 http://localhost:8080/actuator/metrics/sample.counter
 
+http://localhost:8080/actuator/health/Database
+
+
+==================================
+
+Reactive Programming: Declarative programing paradigm concerned with data streams and propagation of change.
+
+User clicks on button, run this function
+
+Existing Solutions: @Async Future and CompletableFuture
+It's still synchrounous when response is sent to client [join()]
+
+Subscriber and Publisher, Subscription  model
+
+Spring Webflux module --> for reactive programming --> comes with Netty Web server instead of Tomcat Web Server
+
+Netty is a event driven, non-blocking I/O client-server framework for the development of Java network applications such as protocol servers and clients.
+
+Tomcat and Jetty are Thread based.
+
+Outbound Channel Handler
+
+=================================
+
+Prometheus
+Flux code
+Security
+
+
+
+
 
 
 
