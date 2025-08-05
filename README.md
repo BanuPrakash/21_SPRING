@@ -1258,6 +1258,34 @@ Affordance, in the context of design and psychology, refers to the perceived and
 
 @EnableHypermediaSupport(type = EnableHypermediaSupport.HypermediaType.HAL_FORMS)
 
+====
+
+Spring Data Rest
+Spring Data REST is to simplify the creation of hypermedia-driven RESTful web services. 
+It achieves this by automatically exposing Spring Data repositories as REST endpoints.
+Spring Data JPA + HATEOAS = Spring Data REST
+* My endpoints doesnt need any business logic
+* performing simple CRUD operations
+* No need to write RestController
+
+* mysql
+* jpa
+* Rest Repositories
+* lombok
+
+http://localhost:8080/vehicles/search
+http://localhost:8080/vehicles/search/findByFuelType?fuelType=PETROL
+http://localhost:8080/vehicles/search/findByFuelTypeOrCostPerDayLessThan?fuelType=PETROL&cost=5000
+
+Note: We can't write RestController in this project.
+
+spring.data.rest.base-path=/api
+http://localhost:8080/api/vehicles
+
+
+instead you can use BasePathAwareController to customize
+
+
 
 
 
