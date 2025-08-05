@@ -1179,6 +1179,89 @@ RestTemplate
 
 
 
+============
+
+Day 7:
+
+Redis:
+Caching - caching dependency --> ConcurrentMapCache, Caffiene --> in memory cache
+@Cacheable, @CachePut, @CacheEvict, @EnableCaching, @EnableScheduling, @Scheduled
+
+Async operations instead of executing tasks using WebServer Threads [Tomcat / Jetty / Netty]
+@EnableAsync, @Async, Executors, ExecutorService, ..., ApplicationEvent and @EventListener
+Future and CompletableFuture.
+
+@HttpExchange, @GetExchange, @PostExchange --> RestTemplate / RestClient / WebClient
+
+===================
+
+Redis (Remote Dictionary Server)is an in-memory key–value database, used as a distributed cache.
+
+Redis Cache:
+docker run --name some-redis -p 6379:6379 -d redis
+
+By including the below dependency, Spring boot enables redis as CAche Manager instead of default ConcurrentMapCache [@ConditionalOnMissingBean]
+
+```
+  <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-data-redis</artifactId>
+    </dependency>
+
+    application.properties
+    spring.data.redis.port=6379
+    spring.data.redis.host=127.0.0.1
+
+    public class Vehicle implements Serializable {
+
+    }
+```
+
+Redis Client to run on NodeJS --> redis commander
+npx redis-commander
+
+==========
+
+HATEOAS: HATEOAS, which stands for Hypermedia as the Engine of Application State, is a constraint of the REST architectural style
+https://martinfowler.com/articles/richardsonMaturityModel.html
+
+WebMvcLinkBuilder: Builder to ease building Link instances
+
+ ```
+  <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-hateoas</artifactId>
+        </dependency>
+
+  @RequestMapping("/customers")
+ class CustomerController {
+
+   @RequestMapping("/{id}/addresses")
+   HttpEntity<Addresses> showAddresses(@PathVariable Long id) { … }
+ }
+
+ http://server.com/customers
+ customers payload
+
+ Each customer create a link to get addresses
+
+                        /customers                       /2/addresses
+ Link link = linkTo(methodOn(CustomerController.class).showAddresses(2L)).withRel("addresses");
+    "addresses"
+    Link -> /customers/2/addresses
+ ```
+
+RepresentationModel --> EntityModel [ entity + links]
+RepresentationModel --> CollectionModel [ collection of entities + links]
+
+Affordance, in the context of design and psychology, refers to the perceived and actual properties of an object that suggest how it should be used.
+
+@EnableHypermediaSupport(type = EnableHypermediaSupport.HypermediaType.HAL_FORMS)
+
+
+
+
+
 
 
 

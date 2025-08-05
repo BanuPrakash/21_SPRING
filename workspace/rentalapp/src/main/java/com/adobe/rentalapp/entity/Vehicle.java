@@ -9,13 +9,15 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.io.Serializable;
+
 @NoArgsConstructor
 @AllArgsConstructor
 @Data
 @Builder
 @Entity
 @Table(name="vehicles")
-public class Vehicle {
+public class Vehicle implements Serializable {
 
     @Id
     @Column(name="REG_NO", length = 50)

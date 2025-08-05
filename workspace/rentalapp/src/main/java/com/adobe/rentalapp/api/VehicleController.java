@@ -3,20 +3,32 @@ package com.adobe.rentalapp.api;
 import com.adobe.rentalapp.entity.Vehicle;
 import com.adobe.rentalapp.service.EntityNotFoundException;
 import com.adobe.rentalapp.service.RentalService;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.CachePut;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.cache.concurrent.ConcurrentMapCache;
+import org.springframework.hateoas.EntityModel;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+
 import java.util.List;
+
+import  static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
+import  static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
+import  static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.afford;
 
 @RestController
 @RequestMapping("api/vehicles")
 @RequiredArgsConstructor
+@Tag(name = "Vehicle API", description = "Vehicles API Service")
 public class VehicleController {
     private final RentalService service;
 
@@ -32,8 +44,33 @@ public class VehicleController {
         }
     }
 
+    @GetMapping("/hateos/{no}")
+    public EntityModel<Vehicle> getByRegistrationNumberLinks(@PathVariable("no") String regNo) throws EntityNotFoundException {
+        Vehicle vehicle =  service.getVehicleByRegNo(regNo);
+        EntityModel<Vehicle> entityModel = EntityModel.of(vehicle,
+                linkTo(methodOn(VehicleController.class)
+                        .getByRegistrationNumberLinks(regNo)).withSelfRel()
+                        .andAffordance(afford(methodOn(VehicleController.class).modifyCostOfRentForVehicle(regNo, 0)))
+                        .andAffordance(afford(methodOn(VehicleController.class).addVehicle(null))),
+                linkTo(methodOn(VehicleController.class)
+                        .getVehicles(null)).withRel("vehicles"));
+        return  entityModel;
+    }
+
+
     // Using Path Parameter [/]
     // GET http://localhost:8080/api/vehicles/GA05A1411
+
+    @Operation(
+            description = "Service that return a Vehicle",
+            summary = "This service returns a Vehicle by Registration Number",
+            responses = {
+                    @ApiResponse(description = "Successful Operation", responseCode = "200",
+                            content = @Content(mediaType = "application/json",
+                                    schema = @Schema(implementation = Vehicle.class))),
+                    @ApiResponse(responseCode = "404", description = "Vehicle  Not found", content = @Content),
+                    @ApiResponse(responseCode = "401", description = "Authentication Failure", content = @Content(schema = @Schema(hidden = true)))
+            })
     @GetMapping("/{no}")
     public Vehicle getByRegistrationNumber(@PathVariable("no") String regNo) throws EntityNotFoundException {
         return service.getVehicleByRegNo(regNo);
