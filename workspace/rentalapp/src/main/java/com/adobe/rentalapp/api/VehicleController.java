@@ -3,6 +3,8 @@ package com.adobe.rentalapp.api;
 import com.adobe.rentalapp.entity.Vehicle;
 import com.adobe.rentalapp.service.EntityNotFoundException;
 import com.adobe.rentalapp.service.RentalService;
+import io.micrometer.core.instrument.Counter;
+import io.swagger.v3.oas.annotations.Hidden;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
@@ -31,6 +33,7 @@ import  static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.afford;
 @Tag(name = "Vehicle API", description = "Vehicles API Service")
 public class VehicleController {
     private final RentalService service;
+
 
     // Query Parameter [ ? ]
     // GET http://localhost:8080/api/vehicles
@@ -112,7 +115,9 @@ public class VehicleController {
         return service.updateCostOfRental(regNo, cost);
     }
 
+    @Hidden
     @CacheEvict(value = "vehiclesCache", key = "#regNo")
+    @DeleteMapping("/{no}")
     public String deleteVehicle(@PathVariable("no") String regNo) {
         return "Deleted!!!";
     }

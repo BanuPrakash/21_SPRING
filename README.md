@@ -1285,6 +1285,115 @@ http://localhost:8080/api/vehicles
 
 instead you can use BasePathAwareController to customize
 
+```
+
+@Configuration
+public class RestConfiguration implements RepositoryRestConfigurer {
+
+    @Override
+    public void configureRepositoryRestConfiguration(RepositoryRestConfiguration config, CorsRegistry cors) {
+        config.disableDefaultExposure();
+
+    }
+}
+
+@RepositoryRestResource(collectionResourceRel = "people", path = "people")
+public interface PersonRepository extends JpaRepository<Person, Long> {
+    @Override
+    @RestResource(exported = false)
+    void deleteById(Long aLong);
+}
+
+```
+
+
+RESTapi Documentation:
+1) RAML
+```
+/books:
+  /{bookTitle}
+    get:
+      queryParameters:
+        author:
+          displayName: Author
+          type: string
+          description: An author's full name
+          example: Mary Roach
+          required: false
+        publicationYear:
+          displayName: Pub Year
+          type: number
+          description: The year released for the first time in the US
+          example: 1984
+          required: false
+        rating:
+          displayName: Rating
+          type: number
+          description: Average rating (1-5) submitted by users
+          example: 3.14
+          required: false
+        isbn:
+          displayName: ISBN
+          type: string
+          minLength: 10
+          example: 0321736079
+    put:
+      queryParameters:
+        access_token:
+          displayName: Access Token
+          type: string
+          description: Token giving you permission to make call
+          required: true
+```
+2) OpenAPI - Swagger
+
+```
+         <!-- OpenAPI -->
+        <dependency>
+            <groupId>org.springdoc</groupId>
+            <artifactId>springdoc-openapi-starter-webmvc-ui</artifactId>
+            <version>2.8.9</version>
+        </dependency>
+
+        http://localhost:8080/v3/api-docs
+        http://localhost:8080/swagger-ui/index.html
+```
+
+============
+
+Observability - ability to measure the internal state of the system like (logs, metrics and traces)
+
+actutator dependency
+
+```
+     <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-actuator</artifactId>
+        </dependency>
+
+http://localhost:8080/actuator
+
+management.endpoints.web.exposure.include=*
+
+ab -c 50 -n 100 http://localhost:8080/api/vehicles
+
+http://localhost:8080/actuator/metrics
+http://localhost:8080/actuator/metrics/http.server.requests
+
+http://localhost:8080/actuator/metrics/jvm.threads.live
+
+
+Time Series database
+Prometheus collects and stores its metrics as time series data to scrape data from actuator.
+
+```
+
+Spring Boot 3.x includes micrometer project defines concepts like meters, counters, timers, gauge...
+
+ab -c 5 -n 30 http://localhost:8080/hello     
+
+http://localhost:8080/actuator/metrics/sample.counter
+
 
 
 
