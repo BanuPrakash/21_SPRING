@@ -1417,14 +1417,6 @@ Tomcat and Jetty are Thread based.
 Outbound Channel Handler
 
 =================================
-docker run -d -p 27017:27017 --name some-mongo mongo
-
-docker exec -it some-mongo bash
-
-mongosh
-
-db.createCollection("movies", { capped: true, size: 100000, max: 1000 });
-
 Prometheus
 Flux code
 Security
@@ -1460,10 +1452,91 @@ http_server_requests_seconds_count
 
 ```
 
+Spring WebFlux module - reactive programming
+By default this provides 2 types of publishers
+* Mono [ 0 - 1 ]
+* Flux [0 - n series of data]
 
 
+````
+    // streaming a movie
+    Stream<String> stream = Stream.of("S1", "S2", "S3", "S4", "S5"); // assume data comming from NIO like files
+
+    // OTT Streamer like NetFlix
+    Flux<String> netFlix = Flux.fromStream(stream).delayElements(Duration.ofSeconds(2));
+
+    // I start watching
+
+    netFlix.subscribe(scene -> System.out.println("I am watching :" + scene));
+
+    Thread.sleep(2000);
+    // Someone else joins later
+      netFlix.subscribe(scene -> System.out.println("Mr.X am watching :" + scene));
 
 
+// Hot Publisher, Broadcasting
+    Flux<String> netFlix = Flux.fromStream(stream).delayElements(Duration.ofSeconds(2)).share();
+
+
+    // I start watching
+
+    netFlix.subscribe(scene -> System.out.println("I am watching :" + scene));
+
+    Thread.sleep(2000);
+    // Someone else joins later, he misses few scenes
+      netFlix.subscribe(scene -> System.out.println("Mr.X am watching :" + scene));
+
+Handling Backpressure:
+
+Flux<Integer> intPublisher = FLux.range(1, 100).log();
+
+intPublisher.subscribe(new BaseSubscriber<Integer>() {
+
+    public void hookOnNext(Integer value) {
+        request(3);
+        ...
+        request(3);
+        ...
+        cancel();
+    }
+});
+````
+MongoDB -- NoSQL
+
+```
+docker run -d -p 27017:27017 --name some-mongo mongo
+
+docker exec -it some-mongo bash
+
+mongosh
+
+use movies_db
+db.createCollection("movies", { capped: true, size: 100000, max: 1000 });
+
+Capped Collections provided Tailable Cursor
+use MongoDB as an infinite data stream by utilizing tailable cursors
+A tailable cursor remains open until it is closed externally. It emits data as new documents arrive in a capped collection.
+
+
+RDMBS <----> MongoDB
+Table <----> collections
+Row <---> Document
+columns <---> Fields
+
+Lombok, 
+Spring Data Reactive MongoDB NoSQL,
+Provides asynchronous stream processing with non-blocking back pressure for MongoDB.
+Spring Reactive Web Web
+Build reactive web applications with Spring WebFlux and Netty Server.
+
+
+R2DBC stands for Reactive Relational Database Connectivity. 
+
+db.movies.find();
+
+
+Server-Sent Events (SSE)
+```
 
 
 

@@ -10,7 +10,6 @@ import reactor.core.scheduler.Schedulers;
 import java.time.Duration;
 
 @RestController
-
 public class MovieController {
 
     @Autowired
@@ -21,6 +20,7 @@ public class MovieController {
         this.repository.save(m).subscribe();
         return Mono.just("Movie added!!!");
     }
+
     @GetMapping(value = "/movie", produces = MediaType.TEXT_EVENT_STREAM_VALUE)
     public Flux<Movie> getMovies(){
         return this.repository.findBy();

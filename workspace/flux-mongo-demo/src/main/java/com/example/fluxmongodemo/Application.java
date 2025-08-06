@@ -32,7 +32,11 @@ public class Application {
     CommandLineRunner commandLineRunner() {
         return args -> {
             ObjectMapper objectMapper = new ObjectMapper();
+//            String json = "{\"id\":null,\"title\":\"Some Movie\",\"year\":0,\"genre\":\"Comedy\",\"imdbRating\":0.0}";
+//            Movie m = objectMapper.readValue(json, Movie.class);
+
             List<Movie> movieList = objectMapper.readValue(resource.getInputStream(), new TypeReference<>() {});
+
             Flux.fromIterable(movieList)
                     .delayElements(Duration.ofSeconds(2))
                     .flatMap(this.repository::save)
