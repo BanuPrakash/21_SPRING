@@ -1,0 +1,13 @@
+POST http://localhost:8080/movie
+Content-Type: application/json
+accept:application/json
+
+{
+    "id": 123,
+    "title":"Olive",
+    "year":2008,
+    "genre":"comedy",
+    "imdbRating":1.9
+  }
+
+###

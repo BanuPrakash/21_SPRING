@@ -1417,6 +1417,13 @@ Tomcat and Jetty are Thread based.
 Outbound Channel Handler
 
 =================================
+docker run -d -p 27017:27017 --name some-mongo mongo
+
+docker exec -it some-mongo bash
+
+mongosh
+
+db.createCollection("movies", { capped: true, size: 100000, max: 1000 });
 
 Prometheus
 Flux code
@@ -1424,12 +1431,34 @@ Security
 
 
 
+Day 8:
+
+Cache - RedisCacheManager [Serializable , What type of Serialization]
+HATEOAS - WebMvcLinkBuilder [linkTo, methodOn, affordance [HAL_FORMS]] ,EntityModel or CollectionModel
+Spring Data Rest - project on top of Data Repositories like Spring Data Jpa / Spring Data Mongo
+RestConfiguration to customize endpoints, BasePathAwareController
+
+Actuator - Observability [health, info, beans, cache, metrics] io.micrometer [ Counter, Timer , Guages]
+
+Prometheus fundamentally stores all data as time series
+
+```
+ <dependency>
+            <groupId>io.micrometer</groupId>
+            <artifactId>micrometer-registry-prometheus</artifactId>
+ </dependency>
+
+ docker compose up
+ http://localhost:8080/actuator/prometheus
+
+http://localhost:9090/
+
+http_server_requests_seconds_count
+
+ docker compose down
 
 
-
-
-
-
+```
 
 
 
