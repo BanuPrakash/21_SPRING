@@ -1538,7 +1538,75 @@ db.movies.find();
 Server-Sent Events (SSE)
 ```
 
+Spring Security Module: Authentication and Authorization
+
+```
+ <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-security</artifactId>
+ </dependency>
+
+ * All resources becomes protected by default
+ * generates a login and logout pages
+ http://localhost:8080/logout
+ * creates a single user with username="user" and generated password
+ Using generated security password: fef53c66-5a4a-4b6f-82b0-c19839a6abd3
+```
+
+UsernamePasswordAuthenticationFilter
+
+attemptAuthentication()
+successfulAuthentication()
+unSuccessfulAuthentication()
+UserDetailsService
+UserDetails loadUserByUsername(String username) throws UsernameNotFoundException;
 
 
+======================
+JSESSIONID is used for Conversational state.
 
+Stateless : Token --> JWT
 
+USer login success -> server sends token
+For every request from client send jwt token back to server for authorization
+GET http://localhost:8080/api/resource
+Authorization: Bearer token
+
+```
+eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiYWRtaW4iOnRydWUsImlhdCI6MTUxNjIzOTAyMn0.KMUFsIDTnFmyG3nMiGM6H9FNFUROf3wh7SmqJp-QV30
+
+Header:
+{
+  "alg": "HS256",
+  "typ": "JWT"
+}
+
+Payload:
+{
+    "sub": "roger@adobe.com",
+    "iat": 3432535,
+    "exp": 5321212,
+    "iss": "https://authorize.adobe.com",
+    "authorities": "ROLE_ADMIN", "ROLE_MANAGER"
+}
+
+SIGNATURE:
+HMACSHA256(
+  base64UrlEncode(header) + "." +
+  base64UrlEncode(payload),
+  averytopsecretsaltvaluettobeusedtogenerateatokenkeepitsafe)
+
+```
+
+Registration:
+http://localhost:8080/auth/register
+User enters details -> AuthController -> AuthenticationService --> UserDao --> save the user
+
+Login:
+http://localhost:8080/auth/login
+AuthController->AuthencticationService-->AuthentationManager->UserDetailsService to validate user; then JWTService to generate a JWT token and send to client.
+
+User access a protected resource:
+http://localhost:8080/api/vehicles
+Accept:
+Authorization: Bearer token
