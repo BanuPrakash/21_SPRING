@@ -1,5 +1,6 @@
 package com.adobe.rentalapp.service;
 
+import com.adobe.rentalapp.aop.Tx;
 import com.adobe.rentalapp.entity.Rental;
 import com.adobe.rentalapp.entity.Vehicle;
 import com.adobe.rentalapp.repo.RentalRepo;
@@ -34,6 +35,7 @@ public class RentalService {
         return rentalRepo.findAll();
     }
 
+
     @Transactional
     public String returnVehicle(int rentalId, Date returnDate) {
         Rental rental = rentalRepo.findById(rentalId).get();
@@ -66,6 +68,7 @@ public class RentalService {
         return vehicleRepo.save(vehicle);
     }
 
+    @Tx
     public List<Vehicle> getVehicles() {
         return vehicleRepo.findAll();
     }

@@ -1,5 +1,6 @@
 package com.adobe.rentalapp.api;
 
+import com.adobe.rentalapp.aop.Tx;
 import com.adobe.rentalapp.entity.Vehicle;
 import com.adobe.rentalapp.service.EntityNotFoundException;
 import com.adobe.rentalapp.service.RentalService;
@@ -38,6 +39,7 @@ public class VehicleController {
     // Query Parameter [ ? ]
     // GET http://localhost:8080/api/vehicles
     // GET http://localhost:8080/api/vehicles?fuelType=PETROL
+
     @GetMapping()
     public   List<Vehicle> getVehicles(@RequestParam( name = "fuelType", required = false) String type) {
         if(type == null) {

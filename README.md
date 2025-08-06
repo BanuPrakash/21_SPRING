@@ -1610,3 +1610,12 @@ User access a protected resource:
 http://localhost:8080/api/vehicles
 Accept:
 Authorization: Bearer token
+
+Method[] methods = object.getClass().getMethods();
+for(Method m : methods) {
+    Tx tx = m.getAnnotation(Tx.class);
+    if(tx == null) {
+        // custom logic
+    }
+}
+
